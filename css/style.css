@@ -1,0 +1,27 @@
+.custom-width-small-area {
+  display: flex;
+  align-content: center;
+  width: 400px;
+}
+
+.etiquetasFormulario {
+  display: flex;
+  align-content: center;
+  padding-top: 20px;
+}
+
+.boton {
+  display: flex;
+  align-content: center;
+  padding-top: 40px;
+}
+
+.cargador {
+  border: 5px solid black;
+}
+
+.titulos {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=style.css.map */

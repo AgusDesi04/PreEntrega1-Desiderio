@@ -1,9 +1,11 @@
 class Persona{
-    constructor(sNombre, sGenero, sEmpleo, sEdad){
+    constructor(sNombre, sGenero, sEdad, sCargo, sSalario ){
         this.nombre = sNombre
         this.genero = sGenero
-        this.empleo = sEmpleo
         this.edad = sEdad
+        this.cargo = sCargo
+        this.salario = sSalario
+        
     }
     
 }

@@ -1,39 +1,31 @@
-let cantidad = prompt("ingrese la cantidad de personas que quiere analizar")
-personas = []
-suma = 0
-function cargarPersonas(cantidad, personas) {
-    for (i = 0; i < cantidad; i++) {
-        let nombre = prompt("Ingrese el nombre de la persona")
-        let genero = prompt("ingrese el genero de la persona (H/M)")
-        let empleo = prompt("ingrese si la persona es empleada o desempleada (E/D)")
-        let edad = parseInt(prompt("ingrese la edad de la persona"))
+let empleados = [];
 
-        personas.push(new Persona(nombre, genero, empleo, edad))
-
-    }
-
+let empleadosLS = localStorage.getItem("empleadosCargados")
+if (empleadosLS) {
+    empleados = JSON.parse(empleadosLS)
+} else {
+    empleados = []
 }
 
-cargarPersonas(cantidad, personas)
+let cargarBtn = document.getElementById("botonCarga");
+let nombreInput = document.getElementById("nombre");
+let generoInput = document.getElementById("genero");
+let edadInput = document.getElementById("edad")
+let cargoInput = document.getElementById("cargo");
+let salarioInput = document.getElementById("salario");
 
-function promedioEdades(personas, suma) {
-    for (i = 0; i < personas.length; i++) {
-        suma += personas[i].edad
-        console.log(suma)
-    }
 
-    return suma / personas.length
+cargarBtn.onclick = () => {
+    let nombre = nombreInput.value;
+    let genero = generoInput.value;
+    let edad = parseInt(edadInput.value);
+    let cargo = cargoInput.value;
+    let salario = parseInt(salarioInput.value);
+
+    empleados.push(new Persona(nombre, genero, edad, cargo, salario))
+
+    localStorage.setItem("empleadosCargados", JSON.stringify(empleados))
+
+    console.log(empleados)
 }
 
-function menuOpciones(promedioEdades) {
-    let opcion = prompt(" OPCIONES = 1) Calcular el promnedio de las edades de las personas cargadas 2)...   Indique la opcion deseada:")
-    if(opcion == 1){
-        alert(promedioEdades(personas, suma))
-        
-    }
-}
-
-menuOpciones(promedioEdades)
-
-//COSAS QUE AGREGAR= VERIFICACION IF PARA LA CANTIDAD EN LA LLAMADA A MENUoPCIONES Y A CARGAR PERSONAS
-//AGREGAR MAS OPCIONES
