@@ -1,51 +1,39 @@
-let res = "S"
-let cantidad = prompt('ingrese la cantidad de personas que desea analizar')
-let personas = []
-
+let cantidad = prompt("ingrese la cantidad de personas que quiere analizar")
+personas = []
+suma = 0
 function cargarPersonas(cantidad, personas) {
-  nombre = prompt('ingrese el nombre de la persona')
-  genero = prompt('ingrese el genero de la persona(H/M)')
-  empleo = prompt('ingrese si la persona es empleada o desempleada (E/D)')
-  edad = prompt('ingrese la edad de la persona')
+    for (i = 0; i < cantidad; i++) {
+        let nombre = prompt("Ingrese el nombre de la persona")
+        let genero = prompt("ingrese el genero de la persona (H/M)")
+        let empleo = prompt("ingrese si la persona es empleada o desempleada (E/D)")
+        let edad = parseInt(prompt("ingrese la edad de la persona"))
 
-  let persona = new Persona(nombre, genero, empleo, edad)
-  personas.push = persona
+        personas.push(new Persona(nombre, genero, empleo, edad))
+
+    }
+
 }
 
-console.log(personas)
+cargarPersonas(cantidad, personas)
 
+function promedioEdades(personas, suma) {
+    for (i = 0; i < personas.length; i++) {
+        suma += personas[i].edad
+        console.log(suma)
+    }
 
-/*function calcularPromedio(sumatoria, cantidad) {
-  let promedio = sumatoria / cantidad
-  return promedio
+    return suma / personas.length
 }
 
-
-
-
-promedio = calcularPromedio(suma, cantidad)
-
-alert(promedio)
-
-
-const arrayEdades = []
-do {
-  let edad = Number(prompt("Ingrese la edad de la persona:"));
-  if (edad > 0) {
-    arrayEdades.push(edad);
-    cantidad++
-    res = prompt("Quieres seguir ingresando edades?:(S/N)")
-    console.log(arrayEdades)
-  } else {
-    alert("La edad teiene que ser mayor a 0")
-  }
-
-
-} while (res == "S")
-
-let suma = 0
-
-for (var i = 0; i < arrayEdades.length; i++) {
-  suma += arrayEdades[i]
+function menuOpciones(promedioEdades) {
+    let opcion = prompt(" OPCIONES = 1) Calcular el promnedio de las edades de las personas cargadas 2)...   Indique la opcion deseada:")
+    if(opcion == 1){
+        alert(promedioEdades(personas, suma))
+        
+    }
 }
-console.log(suma)*/
+
+menuOpciones(promedioEdades)
+
+//COSAS QUE AGREGAR= VERIFICACION IF PARA LA CANTIDAD EN LA LLAMADA A MENUoPCIONES Y A CARGAR PERSONAS
+//AGREGAR MAS OPCIONES
