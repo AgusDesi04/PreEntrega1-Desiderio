@@ -43,8 +43,14 @@
                 </form>
                 <button class="boton btn btn-primary" type="submit" id="botonCarga">CARGAR</button>
             </div>
-            <div class="col">
-                <h2>Buscador de empleados:</h2>
+            <div class="col buscador">
+                <h2 class="titulos">Buscador de empleados:</h2>
+                <label class="etiquetasFormulario labelDerecha" for="nombre">Buscar empleado:</label>
+                <div class="form-floating custom-width-small-area tagDerecha">
+                    <textarea class="form-control" placeholder="" id="buscador"></textarea>
+                    <label for="floatingTextarea labelBuscador">Ingrese el nombre del empleado que desea buscar</label>
+                </div>
+                <button class="btn btn-primary" type="submit" id="botonInfo">Mostrar Info</button>
 
             </div>
         </div>

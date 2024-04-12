@@ -18,10 +18,17 @@
 
 .cargador {
   border: 5px solid black;
+  border-radius: 10px;
 }
 
 .titulos {
   text-decoration: underline;
+}
+
+.buscador {
+  border: 5px solid black;
+  border-radius: 10px;
+  margin-left: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -13,6 +13,8 @@ let generoInput = document.getElementById("genero");
 let edadInput = document.getElementById("edad")
 let cargoInput = document.getElementById("cargo");
 let salarioInput = document.getElementById("salario");
+let buscadorInput = document.getElementById("buscador");
+let infoBtn = document.getElementById("botonInfo")
 
 
 cargarBtn.onclick = () => {
@@ -27,5 +29,9 @@ cargarBtn.onclick = () => {
     localStorage.setItem("empleadosCargados", JSON.stringify(empleados))
 
     console.log(empleados)
+}
+
+infoBtn.onclick = () => {
+    empleados.find()
 }
 
