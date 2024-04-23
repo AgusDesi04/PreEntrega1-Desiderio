@@ -16,19 +16,50 @@ let salarioInput = document.getElementById("salario");
 let buscadorInput = document.getElementById("buscador");
 let infoBtn = document.getElementById("botonInfo");
 let contenedorEmpleados = document.getElementById('contenedorEmpleados')
+let formulario = document.getElementById("formulario")
 
 cargarBtn.onclick = () => {
     let nombre = nombreInput.value;
     let genero = generoInput.value;
-    let edad = parseInt(edadInput.value);
+    let edad = parseInt(edadInput.value) || 0;
     let cargo = cargoInput.value;
-    let salario = parseInt(salarioInput.value);
+    let salario = parseInt(salarioInput.value) || 0;
+    if (nombre != "" && genero != "" && cargo != "") {
+        if (edad > 0 && salario > 0) {
+            empleados.push(new Persona(nombre, genero, edad, cargo, salario));
+            localStorage.setItem("empleadosCargados", JSON.stringify(empleados));
+            formulario.reset();
+            Toastify({
+                text: "Empleado Cargado!",
+                className: "info",
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+            }).showToast();
+        } else {
+            Toastify({
+                text: "La edad y el salario deben ser mayores a 0",
+                className: "info",
+                style: {
+                    background: "red",
+                }
+            }).showToast();
+        }
+    } else {
+        Toastify({
+            text: "Los campos de nombre, genero y cargo no pueden estar vacios!",
+            className: "info",
+            style: {
+                background: "red",
+            }
+        }).showToast();
+    }
 
-    empleados.push(new Persona(nombre, genero, edad, cargo, salario));
-
-    localStorage.setItem("empleadosCargados", JSON.stringify(empleados));
 
     console.log(empleados);
+
+
+
 };
 
 function mostrarInformacionEmpleado(empleado) {
@@ -40,10 +71,12 @@ function mostrarInformacionEmpleado(empleado) {
     <p>Salario: ${empleado.salario}</p>
 `;
 
+    // PROBAR CAMBIAR POR ALERTA DE SWEET ALERT
+
 }
 
 infoBtn.onclick = () => {
-
+    console.log(empleados)
     let buscador = buscadorInput.value;
     let empleado = empleados.find((el) => {
         return el.nombre.toLowerCase() == buscador.toLowerCase()
@@ -51,11 +84,16 @@ infoBtn.onclick = () => {
     console.log(empleado)
 
     if (empleado != undefined) {
-        contenedorEmpleados.innerHTML = ''
         mostrarInformacionEmpleado(empleado)
+
     } else {
-        contenedorEmpleados.innerHTML = ''
-        contenedorEmpleados.innerHTML = '<p> No se encontro el empleado'
+        Toastify({
+            text: "No se encontro el empleado!",
+            className: "info",
+            style: {
+                background: "red",
+            }
+        }).showToast();
     }
 
 };
