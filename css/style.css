@@ -31,4 +31,14 @@
   margin-left: 10px;
 }
 
+.botones {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.botones1 {
+  margin: 20px;
+}
+
 /*# sourceMappingURL=style.css.map */
