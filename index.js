@@ -23,7 +23,7 @@ let infoBtn = document.getElementById("botonInfo");
 let contenedorEmpleados = document.getElementById('contenedorEmpleados')
 let formulario = document.getElementById("formulario")
 let botonPromedio = document.getElementById("botonPromedio")
-let botonBorrarPorNombre = document.getElementById('borrarPorNombre')
+let botonBuscarNombresABorrar = document.getElementById('botonBuscarNombresABorrar')
 let botonBorrarTodo = document.getElementById('borrarTodo')
 
 // FUNCTIONS:
@@ -182,38 +182,94 @@ botonBorrarTodo.onclick = () => {
 };
 
 
-botonBorrarPorNombre.onclick = () => {
+botonBuscarNombresABorrar.onclick = () => {
     let buscador = buscadorInput.value.trim().toLowerCase();
-    console.log("termino de busqueda:", buscador)
-    let empleadosABorrar = empleados.filter((el) => {
-        return el.nombre.toLowerCase().includes(buscador);
-    });
-    console.log(empleadosABorrar)
-    if (empleadosABorrar.length > 0) {
-        empleadosABorrar.forEach(empleado => {
-            let index = empleados.indexOf(empleado);
-            if (index !== -1) {
-                empleados.splice(index, 1); // Eliminar el empleado del arreglo
-            }
+    contenedorEmpleados.innerHTML = ""
+    if (buscador != "") {
+        console.log("término de búsqueda:", buscador);
+
+        let empleadosABorrar = []
+        console.log(empleadosABorrar.length)
+
+        console.log('empleados a borrar:', empleadosABorrar)
+
+        empleadosABorrar = empleados.filter((el) => {
+            return el.nombre.toLowerCase().includes(buscador);
         });
 
-        localStorage.setItem("empleadosCargados", JSON.stringify(empleados));
+        console.log("término de búsqueda:", buscador);
 
-        Toastify({
-            text: "Empleados eliminados correctamente.",
-            className: "info",
-            style: {
-                background: "green",
+        console.log(empleadosABorrar.length)
+        console.log('empleados a borrar:', empleadosABorrar)
+        if (empleadosABorrar.length > 0) {
+            console.log("empleados a borrar:", empleadosABorrar)
+            let opciones = "";
+            empleadosABorrar.forEach((empleado, index) => {
+                opciones += `${index + 1}. nombre: ${empleado.nombre} cargo: ${empleado.cargo} sueldo: ${empleado.salario}<br>`;
+            });
+
+            let seleccion = 0
+            contenedorEmpleados.innerHTML = ""
+            contenedorEmpleados.innerHTML = `<p>Empleados encontrados:<br>${opciones}<br>Ingrese el número del empleado que desea borrar:</p><br>
+        <div class="form-floating custom-width-small-area">
+             <textarea class="form-control" placeholder="Apellido" id="opcionEmpleado"></textarea>
+             <label for="floatingTextarea">Ingrese la opcion:</label>
+        </div>
+        <button class="btn btn-danger  botones1" type="submit" id="botonBorrarNombreEspecifico">Borrar empleado seleccionado</button>
+        `
+            botonBorrarPorNombre = document.getElementById("botonBorrarNombreEspecifico")
+
+            botonBorrarPorNombre.onclick = () => {
+                console.log("holamundo")
+                seleccion = document.getElementById("opcionEmpleado").value;
+
+
+                let numeroSeleccion = parseInt(seleccion);
+
+                if (!isNaN(numeroSeleccion) && numeroSeleccion > 0 && numeroSeleccion <= empleadosABorrar.length) {
+                    let index = empleados.indexOf(empleadosABorrar[numeroSeleccion - 1]);
+
+                    empleados.splice(index, 1);
+
+                    localStorage.setItem("empleadosCargados", JSON.stringify(empleados));
+
+                    Toastify({
+                        text: "Empleado eliminado correctamente.",
+                        className: "info",
+                        style: {
+                            background: "green",
+                        }
+                    }).showToast();
+                    
+                    contenedorEmpleados.innerHTML = ""
+                } else {
+                    Toastify({
+                        text: "Selección inválida.",
+                        className: "info",
+                        style: {
+                            background: "red",
+                        }
+                    }).showToast();
+                }
             }
-        }).showToast();
 
+        } else {
+            Toastify({
+                text: "No hay empleados con ese nombre para borrar.",
+                className: "info",
+                style: {
+                    background: "red",
+                }
+            }).showToast();
+        }
     } else {
         Toastify({
-            text: "No hay empleados con ese nombre para borrar!",
+            text: "El campo de buscar no puede estar vacio",
             className: "info",
             style: {
                 background: "red",
             }
         }).showToast();
     }
+
 }
