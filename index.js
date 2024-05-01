@@ -25,7 +25,7 @@ let formulario = document.getElementById("formulario")
 let botonPromedio = document.getElementById("botonPromedio")
 let botonBuscarNombresABorrar = document.getElementById('botonBuscarNombresABorrar')
 let botonBorrarTodo = document.getElementById('borrarTodo')
-
+let botonActualizarSueldo = document.getElementById('botonActualizarSueldo')
 // FUNCTIONS:
 
 function mostrarInformacionEmpleado(empleadosEncontrados) {
@@ -240,7 +240,7 @@ botonBuscarNombresABorrar.onclick = () => {
                             background: "green",
                         }
                     }).showToast();
-                    
+
                     contenedorEmpleados.innerHTML = ""
                 } else {
                     Toastify({
@@ -273,3 +273,86 @@ botonBuscarNombresABorrar.onclick = () => {
     }
 
 }
+
+botonActualizarSueldo.onclick = () => {
+    let buscador = buscadorInput.value.trim().toLowerCase();
+    contenedorEmpleados.innerHTML = ""
+    if (buscador != "") {
+        let empleadosAActualizar = []
+
+        empleadosAActualizar = empleados.filter((el) => {
+            return el.nombre.toLowerCase().includes(buscador);
+        });
+
+        if (empleadosAActualizar.length > 0) {
+            let opciones = "";
+            empleadosAActualizar.forEach((empleado, index) => {
+                opciones += `${index + 1}. nombre: ${empleado.nombre} cargo: ${empleado.cargo} sueldo: ${empleado.salario}<br>`;
+            });
+
+            contenedorEmpleados.innerHTML = ""
+            contenedorEmpleados.innerHTML = `<p>Empleados encontrados:<br>${opciones}<br>Ingrese el número del empleado que desea actualizar el sueldo:</p><br>
+        <div class="form-floating custom-width-small-area">
+             <textarea class="form-control" placeholder="Nuevo Sueldo" id="nuevoSueldo"></textarea>
+             <label for="nuevoSueldo">Nuevo Sueldo:</label>
+        </div>
+        <div class="form-floating custom-width-small-area">
+             <textarea class="form-control" placeholder="Opcion" id="opcionEmpleado"></textarea>
+             <label for="opcionEmpleado">Ingrese la opción:</label>
+        </div>
+        <button class="btn btn-primary  botones1" type="submit" id="botonActualizarEmpleado">Actualizar el sueldo</button>
+        `;
+
+            let botonActualizarEmpleado = document.getElementById("botonActualizarEmpleado");
+
+            botonActualizarEmpleado.onclick = () => {
+                let seleccion = document.getElementById("opcionEmpleado").value;
+                let nuevoSueldo = document.getElementById("nuevoSueldo").value;
+
+                let numeroSeleccion = parseInt(seleccion);
+
+                if (!isNaN(numeroSeleccion) && numeroSeleccion > 0 && numeroSeleccion <= empleadosAActualizar.length) {
+                    let index = empleados.indexOf(empleadosAActualizar[numeroSeleccion - 1]);
+
+                    empleados[index].salario = nuevoSueldo;
+
+                    localStorage.setItem("empleadosCargados", JSON.stringify(empleados));
+
+                    Toastify({
+                        text: "Sueldo actualizado correctamente.",
+                        className: "info",
+                        style: {
+                            background: "green",
+                        }
+                    }).showToast();
+
+                    contenedorEmpleados.innerHTML = "";
+                } else {
+                    Toastify({
+                        text: "Selección inválida.",
+                        className: "info",
+                        style: {
+                            background: "red",
+                        }
+                    }).showToast();
+                }
+            };
+        } else {
+            Toastify({
+                text: "No hay empleados con ese nombre para actualizar su sueldo.",
+                className: "info",
+                style: {
+                    background: "red",
+                }
+            }).showToast();
+        }
+    } else {
+        Toastify({
+            text: "El campo de búsqueda no puede estar vacío.",
+            className: "info",
+            style: {
+                background: "red",
+            }
+        }).showToast();
+    }
+};
