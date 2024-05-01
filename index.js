@@ -293,11 +293,11 @@ botonActualizarSueldo.onclick = () => {
             contenedorEmpleados.innerHTML = ""
             contenedorEmpleados.innerHTML = `<p>Empleados encontrados:<br>${opciones}<br>Ingrese el número del empleado que desea actualizar el sueldo:</p><br>
         <div class="form-floating custom-width-small-area">
-             <textarea class="form-control" placeholder="Nuevo Sueldo" id="nuevoSueldo"></textarea>
+             <input type='number' class="form-control" placeholder="Nuevo Sueldo" id="nuevoSueldo"></input>
              <label for="nuevoSueldo">Nuevo Sueldo:</label>
         </div>
         <div class="form-floating custom-width-small-area">
-             <textarea class="form-control" placeholder="Opcion" id="opcionEmpleado"></textarea>
+             <input type='number' class="form-control" placeholder="Opcion" id="opcionEmpleado"></input>
              <label for="opcionEmpleado">Ingrese la opción:</label>
         </div>
         <button class="btn btn-primary  botones1" type="submit" id="botonActualizarEmpleado">Actualizar el sueldo</button>
@@ -312,10 +312,10 @@ botonActualizarSueldo.onclick = () => {
                 let numeroSeleccion = parseInt(seleccion);
 
                 if (!isNaN(numeroSeleccion) && numeroSeleccion > 0 && numeroSeleccion <= empleadosAActualizar.length) {
-                    let index = empleados.indexOf(empleadosAActualizar[numeroSeleccion - 1]);
+                    let empleadoSeleccionado = empleadosAActualizar[numeroSeleccion - 1];
+                    let index = empleados.findIndex(empleado => empleado === empleadoSeleccionado);
 
                     empleados[index].salario = nuevoSueldo;
-
                     localStorage.setItem("empleadosCargados", JSON.stringify(empleados));
 
                     Toastify({
@@ -325,8 +325,8 @@ botonActualizarSueldo.onclick = () => {
                             background: "green",
                         }
                     }).showToast();
+                    contenedorEmpleados.innerHTML = ""
 
-                    contenedorEmpleados.innerHTML = "";
                 } else {
                     Toastify({
                         text: "Selección inválida.",
